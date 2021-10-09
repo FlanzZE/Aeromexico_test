@@ -1,10 +1,10 @@
 import Axios from "axios"
-
+const apiURL = "http://localhost:8000/api/"
 export const fetchCharacters = () => async (dispatch) => {
 
   dispatch({ type: "FETCH_POSTS_REQUESTS" })
   try {
-    const response = await Axios.get("http://localhost:4000/characters");
+    const response = await Axios.get(apiURL + "characters");
     dispatch({ type: "FETCH_POSTS_SUCCESS", payload: response.data })
   } catch (error) {
     dispatch({ type: "FETCH_POSTS_FAILURE", error })
@@ -14,7 +14,7 @@ export const fetchFavoriteCharacters = () => async (dispatch) => {
 
   dispatch({ type: "FETCH_POSTS_REQUESTS" })
   try {
-    const response = await Axios.get("http://localhost:4000/characters?favorite=true");
+    const response = await Axios.get(apiURL + "characters?favorite=true");
     dispatch({ type: "FETCH_FAVORITES_SUCCESS", payload: response.data })
   } catch (error) {
     dispatch({ type: "FETCH_POSTS_FAILURE", error })
@@ -23,7 +23,7 @@ export const fetchFavoriteCharacters = () => async (dispatch) => {
 export const removeFromFavorites = (id) => async (dispatch) => {
   try {
     dispatch({ type: "REMOVE_FAVORITE_CHARACTER" })
-    const response = await Axios.patch(`http://localhost:4000/characters/${id}`, { favorite: false });
+    const response = await Axios.patch(apiURL + `characters/${id}`, { favorite: false });
     if (response) {
       dispatch(fetchCharacters())
       dispatch(fetchFavoriteCharacters())
@@ -37,7 +37,7 @@ export const addToFavorites = (id) => async (dispatch, getState) => {
     const { characters } = getState()
     if (characters.filter(e => e.favorite).length < 5) {
       dispatch({ type: "ADD_FAVORITE_CHARACTER" })
-      const response = await Axios.patch(`http://localhost:4000/characters/${id}`, { favorite: true });
+      const response = await Axios.patch(apiURL + `characters/${id}`, { favorite: true });
       if (response) {
         dispatch(fetchCharacters())
         dispatch(fetchFavoriteCharacters())
@@ -51,7 +51,7 @@ export const addToFavorites = (id) => async (dispatch, getState) => {
 export const filterByStudent = () => async (dispatch) => {
   dispatch({ type: "FETCH_POSTS_REQUESTS" })
   try {
-    const response = await Axios.get("http://localhost:4000/characters?hogwartsStudent=true");
+    const response = await Axios.get(apiURL + "characters?hogwartsStudent=true");
     dispatch({ type: "FETCH_BY_STUDENT_SUCCESS", payload: response.data })
   } catch (error) {
     dispatch({ type: "FETCH_POSTS_FAILURE", error })
@@ -60,7 +60,7 @@ export const filterByStudent = () => async (dispatch) => {
 export const filterByStaff = () => async (dispatch) => {
   dispatch({ type: "FETCH_POSTS_REQUESTS" })
   try {
-    const response = await Axios.get("http://localhost:4000/characters?hogwartsStaff=true");
+    const response = await Axios.get(apiURL + "characters?hogwartsStaff=true");
     // const newData = response.data.map((e, id) => {
     //   return { ...e, id: id + 1, favorite: false }
     // });
@@ -73,7 +73,7 @@ export const filterByStaff = () => async (dispatch) => {
 export const postNewCharacter = (data) => async (dispatch) => {
   dispatch({ type: "FETCH_POSTS_REQUESTS" })
   try {
-    const response = await Axios.post("http://localhost:4000/characters", data);
+    const response = await Axios.post(apiURL + "characters", data);
     dispatch({ type: "POST_CHARACTER_REQUESTS_SUCCESS", payload: response.data })
     if (response) {
       dispatch(fetchCharacters())
@@ -85,7 +85,7 @@ export const postNewCharacter = (data) => async (dispatch) => {
 }
 
 // const promise = Axios.get(
-//   "http://localhost:4000/characters"
+//   apiURL+"characters"
 // )
 
 // return {

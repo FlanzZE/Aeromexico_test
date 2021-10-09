@@ -20,8 +20,8 @@
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "server": "json-server -p 4000 --watch ./server/mocks/hp-characters.json",
-    "start": "react-scripts start",
+    "server": "node ./server/server.js",
+    "start": "node ./server/server.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

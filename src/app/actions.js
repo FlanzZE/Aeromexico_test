@@ -1,5 +1,5 @@
 import Axios from "axios"
-const apiURL = "http://localhost:8000/api/"
+const apiURL = "https://aeromexico-test.herokuapp.com/api/"
 export const fetchCharacters = () => async (dispatch) => {
 
   dispatch({ type: "FETCH_POSTS_REQUESTS" })
